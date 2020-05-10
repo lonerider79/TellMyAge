@@ -17,7 +17,7 @@ TellMyAge.au3 - Main program file to execute and compile program. Open in AutoIT
 TellMyAge.ico - Icon file for the program the only dependancy of TellMtAge.au3
 
 
-## License
+### License
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

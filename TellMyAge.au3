@@ -72,20 +72,23 @@ Func ShowAge()
 	$dob_d = $g_aDate[2]
 	$dob_m = $g_aDate[1]
 	$dob_y = $g_aDate[0]
+	If( _DateDaysInMonth(@YEAR,@MON) < $dob_d Or @MDAY < $dob_d) Then
+		$refDate = @YEAR & "/"& (@MON - 1) & "/" & $dob_d & " 00:00:00"
+	Else
+		$refDate = @YEAR & "/"& @MON & "/" & $dob_d & " 00:00:00"
+	EndIf
 
 
 
-	$fullmonths = _DateDiff('M', $dob_y & "/" & $dob_m & "/" & $dob_d & " 00:00:00", @YEAR & "/"& @MON & "/01 00:00:00")
-_DebugReportVar("Fullmonths", $fullmonths)
+	$fullmonths = _DateDiff('M', $dob_y & "/" & $dob_m & "/" & $dob_d & " 00:00:00", $refDate)
+
 
 
 	If $fullmonths > 12 Then
 		_DebugReport("+year")
 		$bday_yr = Int($fullmonths/12) ;Ignore fractions
 		$bday_m = $fullmonths - ($bday_yr *12)
-		$refDate = _DateDaysInMonth(@YEAR, @MON - 1)
 		$tmpD = _DateAdd('M',$fullmonths,$dob_y & "/" & $dob_m & "/" & $dob_d & " 00:00:00")
-		$tmpD = _DateAdd('D',_DateDiff('D',$tmpD, @YEAR & "/"& @MON & "/01 00:00:00"),$tmpD)
 		$bday_d = _DateDiff('D',$tmpD,_NowCalcDate())
 	ElseIf $fullmonths < 0 Then ;born this month
 		_DebugReport("<0")
@@ -98,14 +101,13 @@ _DebugReportVar("Fullmonths", $fullmonths)
 		$bday_yr = 0
 		$bday_m = $fullmonths
 		$tmpD = _DateAdd('M',$fullmonths,$dob_y & "/" & $dob_m & "/" & $dob_d & " 00:00:00")
-		$tmpD = _DateAdd('D',_DateDiff('D',$tmpD, @YEAR & "/"& @MON & "/01 00:00:00"),$tmpD)
 		$bday_d = _DateDiff('D',$tmpD,_NowCalcDate())
 
 	EndIf
 
 
 
-	$bday_d =  _DateDiff('D', @YEAR & "/" & @MON & "/" & $dob_d & " 00:00:00",_NowCalc())
+
 
 	_GUICtrlEdit_SetText($edtAgeDisplay, "You are:"& @CRLF & $bday_yr & " Years, " & @CRLF & $bday_m & " Months,"& @CRLF & " and " & $bday_d & " days old." )
 
