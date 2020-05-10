@@ -31,8 +31,6 @@
 #include <GuiEdit.au3>
 #include <Date.au3>
 
-#include <Debug.au3>
-
 #Region ### START Koda GUI section ### Form=frmMain.kxf
 Opt("GUIOnEventMode", 1)
 $frmMain = GUICreate("Tell My Age", 612, 420, 365, 125, BitOR($GUI_SS_DEFAULT_GUI,$WS_SIZEBOX,$WS_THICKFRAME))
@@ -58,7 +56,6 @@ GUICtrlSetOnEvent($btnCalculate, "ShowAge")
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
 ; Just idle around
-_DebugSetup("Check Excel", True) ; start displaying debug environment
 
 While 1
 	Sleep(10)
@@ -78,35 +75,26 @@ Func ShowAge()
 		$refDate = @YEAR & "/"& @MON & "/" & $dob_d & " 00:00:00"
 	EndIf
 
-
-
 	$fullmonths = _DateDiff('M', $dob_y & "/" & $dob_m & "/" & $dob_d & " 00:00:00", $refDate)
 
-
-
 	If $fullmonths > 12 Then
-		_DebugReport("+year")
+    ;Thedate is more than a year before. Take year into consideration
 		$bday_yr = Int($fullmonths/12) ;Ignore fractions
 		$bday_m = $fullmonths - ($bday_yr *12)
 		$tmpD = _DateAdd('M',$fullmonths,$dob_y & "/" & $dob_m & "/" & $dob_d & " 00:00:00")
 		$bday_d = _DateDiff('D',$tmpD,_NowCalcDate())
 	ElseIf $fullmonths < 0 Then ;born this month
-		_DebugReport("<0")
 		$bday_yr = 0
 		$bday_m = 0
 		$bday_d = _DateDiff('M', $dob_y & "/" & $dob_m & "/" & $dob_d & " 00:00:00", @YEAR & "/"& @MON & "/" & @MDAY & " 00:00:00")
 	Else
-		_DebugReport("Else")
-
+;within a year dob
 		$bday_yr = 0
 		$bday_m = $fullmonths
 		$tmpD = _DateAdd('M',$fullmonths,$dob_y & "/" & $dob_m & "/" & $dob_d & " 00:00:00")
 		$bday_d = _DateDiff('D',$tmpD,_NowCalcDate())
 
 	EndIf
-
-
-
 
 
 	_GUICtrlEdit_SetText($edtAgeDisplay, "You are:"& @CRLF & $bday_yr & " Years, " & @CRLF & $bday_m & " Months,"& @CRLF & " and " & $bday_d & " days old." )
