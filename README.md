@@ -4,15 +4,18 @@ A simple utility in AutoIT that calculates age based on your date of birth
 
 This source code requires the [AutoIT Script Compiler] (https://www.autoitscript.com/site/autoit/downloads/)
 
-## Usage
+### Usage
 
 Select the date of birth and click the calculate button
 
 ### File list
 
 frmMain.kxf - KODA Form Designer file where the UI code is generated (not needed to compile)
+
 TellMyAge.au3 - Main program file to execute and compile program. Open in AutoIT3 to compile or execute
+
 TellMyAge.ico - Icon file for the program the only dependancy of TellMtAge.au3
+
 
 ## License
 
