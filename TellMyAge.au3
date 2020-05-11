@@ -1,6 +1,6 @@
 #cs
 	TellMyAge
-	Version 1
+	Version 1.1 beta
 	Google style Age calculator based on Date Of Birth
 	Author Vinu Felix
 
@@ -43,7 +43,7 @@ $grpDOB = GUICtrlCreateGroup("Date Of Birth", 8, 8, 593, 60)
 $g_hDTP = _GUICtrlDTP_Create($frmMain, 24, 32, 190)
 Global $g_aRange[14] = [False, @YEAR, 1, 1, 21, 45, 32, True, @YEAR,@MON, @MDAY, @HOUR, @MIN, @SEC]
 ; Set date range
-_GUICtrlDTP_SetRange($g_hDTP, $g_aRange)
+_GUICtrlDTP_SetRange($g_hDTP, $g_aRange) ;date selection range from range is ignored
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 $grpAge = GUICtrlCreateGroup("", 8, 75, 590, 249)
 $edtAgeDisplay = GUICtrlCreateEdit("", 16, 90, 575, 225)
@@ -55,7 +55,7 @@ $btnCalculate = GUICtrlCreateButton("CALCULATE", 216, 350, 137, 41)
 GUICtrlSetOnEvent($btnCalculate, "ShowAge")
 GUISetState(@SW_SHOW)
 #EndRegion ### END Koda GUI section ###
-; Just idle around
+; waiting for user action
 
 While 1
 	Sleep(10)
@@ -69,7 +69,7 @@ Func ShowAge()
 	$dob_d = $g_aDate[2]
 	$dob_m = $g_aDate[1]
 	$dob_y = $g_aDate[0]
-	If( _DateDaysInMonth(@YEAR,@MON) < $dob_d Or @MDAY < $dob_d) Then
+	If( _DateDaysInMonth(@YEAR,@MON) < $dob_d Or @MDAY < $dob_d) Then ;if it falls within a month calculate from last month
 		$refDate = @YEAR & "/"& (@MON - 1) & "/" & $dob_d & " 00:00:00"
 	Else
 		$refDate = @YEAR & "/"& @MON & "/" & $dob_d & " 00:00:00"
@@ -78,7 +78,7 @@ Func ShowAge()
 	$fullmonths = _DateDiff('M', $dob_y & "/" & $dob_m & "/" & $dob_d & " 00:00:00", $refDate)
 
 	If $fullmonths > 12 Then
-    ;Thedate is more than a year before. Take year into consideration
+    ;The date is more than a year before. Take year into consideration
 		$bday_yr = Int($fullmonths/12) ;Ignore fractions
 		$bday_m = $fullmonths - ($bday_yr *12)
 		$tmpD = _DateAdd('M',$fullmonths,$dob_y & "/" & $dob_m & "/" & $dob_d & " 00:00:00")
@@ -98,6 +98,23 @@ Func ShowAge()
 
 
 	_GUICtrlEdit_SetText($edtAgeDisplay, "You are:"& @CRLF & $bday_yr & " Years, " & @CRLF & $bday_m & " Months,"& @CRLF & " and " & $bday_d & " days old." )
+	Local $bDOW = _DateToDayOfWeek(@YEAR, $dob_m, $dob_d)
+	Switch $bDOW
+		Case 1
+			_GUICtrlEdit_AppendText($edtAgeDisplay, @CRLF & "This year your birthday falls on a Sunday")
+		Case 2
+			_GUICtrlEdit_AppendText($edtAgeDisplay, @CRLF & "This year your birthday falls on a Monday")
+		Case 3
+			_GUICtrlEdit_AppendText($edtAgeDisplay, @CRLF & "This year your birthday falls on a Tuesday")
+		Case 4
+			_GUICtrlEdit_AppendText($edtAgeDisplay, @CRLF & "This year your birthday falls on a Wednesday")
+		Case 5
+			_GUICtrlEdit_AppendText($edtAgeDisplay, @CRLF & "This year your birthday falls on a Thursday")
+		Case 6
+			_GUICtrlEdit_AppendText($edtAgeDisplay, @CRLF & "This year your birthday falls on a Friday")
+		Case 7
+			_GUICtrlEdit_AppendText($edtAgeDisplay, @CRLF & "This year your birthday falls on a Saturday")
+	EndSwitch
 
 EndFunc
 
