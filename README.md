@@ -4,6 +4,8 @@ A simple utility in AutoIT that calculates age based on your date of birth
 
 This source code requires the [AutoIT Script Compiler] (https://www.autoitscript.com/site/autoit/downloads/)
 
+Download compiled binaries [here](https://1drv.ms/u/s!AvKecCdkEFVVxSQfNz6Sq1ZMpiL9)
+
 ### Usage
 
 Select the date of birth and click the calculate button
