@@ -1,3 +1,15 @@
+#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#AutoIt3Wrapper_Icon=TellMyAge.ico
+#AutoIt3Wrapper_Outfile=TellMyAge.Exe
+#AutoIt3Wrapper_Outfile_x64=TellMyAge-x64.Exe
+#AutoIt3Wrapper_Compile_Both=y
+#AutoIt3Wrapper_UseX64=y
+#AutoIt3Wrapper_Res_Comment=Get updates at https://github.com/vinuf666/TellMyAge
+#AutoIt3Wrapper_Res_Description=Calculates precise age in Years, months days.
+#AutoIt3Wrapper_Res_Fileversion=1.0.0.0
+#AutoIt3Wrapper_Res_LegalCopyright=©2020 Vinu Felix.Released under GPLv3
+#AutoIt3Wrapper_Res_Field=Product name|Tell My Age Utility
+#EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 #cs
 	TellMyAge
 	Version 1.1 beta
